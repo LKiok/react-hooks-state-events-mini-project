@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import Task from "./Task";
 
-function Task() {
+function TaskList({ tasks }) {
+  const [taskList, setTaskList] = useState(tasks);
+
+  const handleDeleteTask = (taskId) => {
+    const updatedTaskList = taskList.filter((task) => task.id !== taskId);
+    setTaskList(updatedTaskList);
+  };
+
   return (
-    <div className="task">
-      <div className="label">CATEGORY HERE</div>
-      <div className="text">TEXT HERE</div>
-      <button className="delete">X</button>
+    <div className="tasks">
+      {taskList.map((task) => (
+        <Task key={task.id} task={task} onDelete={handleDeleteTask} />
+      ))}
     </div>
   );
 }
 
-export default Task;
+export default TaskList;
